@@ -50,8 +50,6 @@ python manage.py runserver
 ```
 Now, visit **http://127.0.0.1:8000/** to access the system.
 
-## **📸 Screenshots**
-(You can add screenshots of the login page, dashboard, and file exchange process here.)
 
 ## **📝 License**
 This project is open-source and available under the **MIT License**.
