@@ -217,7 +217,7 @@ def signup(request):
                 return JsonResponse({"error": "Invalid JSON format"}, status=400)
             logger.info("Parsed Data: %s", data)
             required_fields = ["first-name", "last-name", "email", "mobile", "password", "date-of-birth",
-                               "gender", "department", "designation", "address", "country"]
+                               "gender", "department", "designation", "address", "country","container-name"]
             missing_fields = [field for field in required_fields if field not in data or not data[field]]
             if missing_fields:
                 return JsonResponse({"error": f"Missing fields: {', '.join(missing_fields)}"}, status=400)
@@ -232,7 +232,7 @@ def signup(request):
             designation = data["designation"]
             address = data["address"]
             country = data["country"]
-            container_name = f"{first_name.lower()}_{mobile}"
+            container_name = data["container-name"]"
             if User.objects.filter(email=email).exists():
                 return JsonResponse({"error": "Email already registered"}, status=400)
             try:
@@ -243,7 +243,7 @@ def signup(request):
             if not create_container(container_name):
                 return JsonResponse({"error": "Failed to create OpenStack container"}, status=500)
             user = User.objects.create_user(
-                username=email,
+                username=first_name,
                 email=email,
                 password=password,
                 first_name=first_name,
